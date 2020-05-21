@@ -1,0 +1,167 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>SBBDID</artifactId>
+	<packaging>jar</packaging>
+
+	<name>SBBDID</name>
+	<url>http://maven.apache.org</url>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<url>https://repo.spring.io/snapshot</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<url>https://repo.spring.io/milestone</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<!-- spring-boot-build-docker-image-demo -->
+
+	<parent>
+		<groupId>br.cepel.soma</groupId>
+		<artifactId>BuildSoma</artifactId>
+		<version>2.1.0</version>
+	</parent>
+
+	<properties>
+		<project.java.version>1.8</project.java.version>
+		<project.javabin.version>1.8</project.javabin.version>
+		<my.value>xpto</my.value>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<!-- Import dependency management from Spring Boot -->
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>2.3.0.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<version>2.3.0.RELEASE</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+  			<groupId>org.springframework.boot</groupId>
+  			<artifactId>spring-boot-starter-web</artifactId>
+  			<version>2.3.0.RELEASE</version>
+		</dependency>
+		<dependency>
+  			<groupId>org.springframework.boot</groupId>
+  			<artifactId>spring-boot-starter</artifactId>
+  			<version>2.3.0.RELEASE</version>
+		</dependency>
+		<dependency>
+           	<groupId>br.cepel.soma</groupId>
+           	<artifactId>somaCommon</artifactId>
+           	<version>2.1.0</version>
+		</dependency>
+		<dependency>
+           	<groupId>br.cepel.soma</groupId>
+           	<artifactId>somaPersistence</artifactId>
+           	<version>2.1.0</version>
+		</dependency>
+		<dependency>
+           	<groupId>br.cepel.soma</groupId>
+           	<artifactId>somaFSW</artifactId>
+           	<version>2.1.0</version>
+		</dependency>
+		<!-- Dependência necessária para o BSON -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.13.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opendsb</groupId>
+			<artifactId>commonUtils</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<!-- Two JSON libraries and you know the rules: There can be only one! -->
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>3.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+		<!-- GSON is the chosen one ... refactor the rest -->
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>SBBDID</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.3.0.RELEASE</version>
+				<configuration>
+					<arguments>
+						<argument>property1</argument>
+						<argument>property2=${my.value}</argument>
+					</arguments>
+					<environmentVariables>
+						<ENV1>5000</ENV1>
+						<ENV2>Some Text</ENV2>
+					</environmentVariables>
+					<image>
+						<env>
+							<BP_JVM_VERSION>11.0.1</BP_JVM_VERSION>
+						</env>
+						<name>parana/SBBDID</name>
+					</image>
+				</configuration>
+				<executions>
+					<!--  execution>
+						<goals>
+							<goal>build-image</goal>
+						</goals>
+					</execution  -->
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+
