@@ -8,15 +8,14 @@ Installed on your machine:
 - docker
 - java 11+
 
-## running with LoiveReload
+## Running with LiveReload
 
 ```bash
 mvn clean spring-boot:run
 curl -i http://localhost/messorconf-v2/go/10
 ```
 
-
-## building Docker image
+## Building Docker image
 
 ```bash
 mvn clean ; mvn compile ; ./gradlew bootBuildImage
@@ -24,7 +23,7 @@ docker run --rm -p 80:8080 --name soma3 -it spring-boot-build-docker-image-demo
 curl -i http://localhost/messorconf-v2/go/10
 ```
 
-## creating a Fat Jar and running it
+## Creating a Fat Jar and running it
 
 ```bash
 mvn clean compile package assembly:single | grep -v " already added, skipping" ; java -jar target/SBBDID.jar
